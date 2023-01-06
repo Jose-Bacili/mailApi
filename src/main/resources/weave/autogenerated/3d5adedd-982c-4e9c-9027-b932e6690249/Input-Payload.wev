@@ -1,0 +1,87 @@
+%dw 2.0
+
+type auto_3d5adedd_982c_4e9c_9027_b932e6690249_Input_Payload = Array<org_mule_runtime_api_message_Message> | String
+type org_mule_runtime_api_message_Message = {|
+  payload: {
+    flag?: {
+      startDateTime?: {
+        dateTime?: String, 
+        timeZone?: String, 
+        _?: Any
+      }, 
+      dueDateTime?: {
+        dateTime?: String, 
+        timeZone?: String, 
+        _?: Any
+      }, 
+      flagStatus?: "flagged" | "complete" | "notFlagged", 
+      completedDateTime?: {
+        dateTime?: String, 
+        timeZone?: String, 
+        _?: Any
+      }, 
+      _?: Any
+    }, 
+    lastModifiedDateTime?: String, 
+    parentFolderId?: String, 
+    importance?: "normal" | "high" | "low", 
+    subject?: String, 
+    webLink?: String, 
+    isDraft?: Boolean, 
+    isRead?: Boolean, 
+    bodyPreview?: String, 
+    createdDateTime?: String, 
+    body?: {
+      contentType?: "html" | "text", 
+      content?: String, 
+      _?: Any
+    }, 
+    inferenceClassification?: "other" | "focused", 
+    internetMessageId?: String, 
+    toRecipients?: Array<{      emailAddress?: {        address?: String,         name?: String,         _?: Any      },       _?: Any    }>, 
+    isReadReceiptRequested?: Boolean, 
+    from?: {
+      emailAddress?: {
+        address?: String, 
+        name?: String, 
+        _?: Any
+      }, 
+      _?: Any
+    }, 
+    uniqueBody?: {
+      contentType?: "html" | "text", 
+      content?: String, 
+      _?: Any
+    }, 
+    categories?: Array<String>, 
+    id?: String, 
+    hasAttachments?: Boolean, 
+    sentDateTime?: String, 
+    conversationIndex?: String, 
+    conversationId?: String, 
+    internetMessageHeaders?: {
+      name?: String, 
+      value?: String, 
+      _?: Any
+    }, 
+    changeKey?: String, 
+    receivedDateTime?: String, 
+    sender?: {
+      emailAddress?: {
+        address?: String, 
+        name?: String, 
+        _?: Any
+      }, 
+      _?: Any
+    }, 
+    bccRecipients?: Array<{      emailAddress?: {        address?: String,         name?: String,         _?: Any      },       _?: Any    }>, 
+    ccRecipients?: Array<{      emailAddress?: {        address?: String,         name?: String,         _?: Any      },       _?: Any    }>, 
+    isDeliveryReceiptRequested?: Boolean, 
+    replyTo?: Array<{      emailAddress?: {        address?: String,         name?: String,         _?: Any      },       _?: Any    }>, 
+    _?: Any
+  }, 
+  attributes: Null
+|} {"typeId": "org.mule.runtime.api.message.Message"}
+
+
+
