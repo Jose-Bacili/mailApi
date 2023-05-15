@@ -123,7 +123,7 @@ output application/json
 			doc:name="List message attachments"
 			doc:id="6d2cb50a-eae4-4f5a-837a-d63cd443f2c3"
 			config-ref="Outlook365_Outlook365_Config"
-			messageId='AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQBGAAAAAACOEp_wpe90R4mQZRlqa9m7BwAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAAL4KSG2ik4SKqrLwoIvnkkAAUcZn1zAAA=' userId="nfeteste@yara.com" />
+			messageId='#[vars.mensagem.id]' userId="nfeteste@yara.com" />
 		<ee:transform doc:name="Transform Message"
 			doc:id="6655fd68-eca5-4756-9aa5-7eacb88a351f">
 			<ee:message>
@@ -162,7 +162,7 @@ output application/json
 				doc:name="Get message attachment"
 				doc:id="a816944c-7f3c-4fd9-8b49-6b2ddbccdf32"
 				config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com"
-				messageId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQBGAAAAAACOEp_wpe90R4mQZRlqa9m7BwAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAAL4KSG2ik4SKqrLwoIvnkkAAUcZn1zAAA=" getRawContent="true"
+				messageId="#[vars.mensagem.id]" getRawContent="true"
 				attachmentId="#[vars.anexo.id]" />
 			<ee:transform doc:name="Transform Message" doc:id="8f530292-db84-4ef1-93bf-9380764e82bb" >
 				<ee:message >
@@ -190,9 +190,9 @@ else ""]]></ee:set-variable>
 			</ee:transform>
 			<smb:file-write doc:name="File Write" doc:id="cea14a13-dc04-4aa0-aed4-eb46dfecfb1a" config-ref="SMB_Connector_Config" fileName="#[vars.anexo.nome]" dirName="#[vars.diretorio]"/>
 			<outlook365:move-message doc:name="Move message" doc:id="ae6af140-7b36-4b89-842a-e22d2d613a4d" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" messageId="#[vars.mensagem.id]" destinationId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAElAAA=" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" />
-			<file:write doc:name="Write"
+<!-- [STUDIO:"Write"]			<file:write doc:name="Write"
 				doc:id="fdfb5f35-7018-47d2-a1be-451226336f53"
-				config-ref="File_Config" path="#[vars.anexo.nome]" />
+				config-ref="File_Config" path="#[vars.anexo.nome]" /> [STUDIO] -->
 		</foreach>
 		<logger level="INFO" doc:name="Logger"
 			doc:id="8ce5cd99-d92a-4835-b654-0343154fa127" />
