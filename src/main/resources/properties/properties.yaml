@@ -1,0 +1,9 @@
+#  This property file contains environment agnostic properties
+
+# HTTPS Properties
+
+diretorios:
+  nfe: "YARPOQAS01/NFE_IN_ECC/NFe"
+  cte: "YARPOQAS01/NFE_IN_ECC/CTe"
+  eventoNfe: "YARPOQAS01/NFE_IN_ECC/Event"
+  eventoCte: "YARPOQAS01/NFE_IN_ECC/EventCTe"

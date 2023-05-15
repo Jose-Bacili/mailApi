@@ -165,4 +165,6 @@ type auto_3d5adedd_982c_4e9c_9027_b932e6690249_Output_Variables_mensagem = {| id
       </types:output-event>
     </types:processor-declaration>
   </types:enrichment>
+  <types:enrichment select="#8f530292-db84-4ef1-93bf-9380764e82bb"/>
+  <types:enrichment select="#f4cc655c-5ee1-43b7-8a0e-40be042c0991"/>
 </types:mule>

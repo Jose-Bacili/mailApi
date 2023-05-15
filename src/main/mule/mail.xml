@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:smb="http://www.mulesoft.org/schema/mule/smb"
+<mule xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
+	xmlns:smb="http://www.mulesoft.org/schema/mule/smb"
 	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
-	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:custom-metrics="http://www.mulesoft.org/schema/mule/custom-metrics" xmlns:cloudhub="http://www.mulesoft.org/schema/mule/cloudhub" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:outlook365="http://www.mulesoft.org/schema/mule/outlook365" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:custom-metrics="http://www.mulesoft.org/schema/mule/custom-metrics"
+	xmlns:cloudhub="http://www.mulesoft.org/schema/mule/cloudhub"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:outlook365="http://www.mulesoft.org/schema/mule/outlook365"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/outlook365 http://www.mulesoft.org/schema/mule/outlook365/current/mule-outlook365.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule/cloudhub/current/mule-cloudhub.xsd
@@ -12,28 +22,57 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
 http://www.mulesoft.org/schema/mule/smb http://www.mulesoft.org/schema/mule/smb/current/mule-smb.xsd
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd">
-	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="5f33340f-e944-43c7-890c-099783f61424" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
+	<http:listener-config name="HTTP_Listener_config"
+		doc:name="HTTP Listener config"
+		doc:id="5f33340f-e944-43c7-890c-099783f61424">
+		<http:listener-connection host="0.0.0.0"
+			port="8081" />
 	</http:listener-config>
-	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="6951c8c8-db7b-4ed2-a346-bf579bf45881" basePath="/token" >
-		<http:request-connection host="login.microsoftonline.com" port="443" />
+	<http:request-config
+		name="HTTP_Request_configuration"
+		doc:name="HTTP Request configuration"
+		doc:id="6951c8c8-db7b-4ed2-a346-bf579bf45881" basePath="/token">
+		<http:request-connection
+			host="login.microsoftonline.com" port="443" />
 	</http:request-config>
-	<outlook365:outlook365-config name="Outlook365_Outlook365_Config" doc:name="Outlook365 Outlook365 Config" doc:id="f2fac7fc-aafe-4e12-8e70-b05a94f62a76" >
-		<outlook365:oauth-client-credentials-connection >
-			<outlook365:oauth-client-credentials clientId="9b749c5c-94eb-47bd-a0b3-c046abbd3da6" clientSecret="AzT8Q~FoqYYtU4S1GqMzNGtEE0bwBOhLqQD-0amH" tokenUrl="https://login.microsoftonline.com/ef8a53ea-1a1c-4189-b792-c832dcaea568/oauth2/v2.0/token" scopes="https://graph.microsoft.com/.default"/>
+	<outlook365:outlook365-config
+		name="Outlook365_Outlook365_Config"
+		doc:name="Outlook365 Outlook365 Config"
+		doc:id="f2fac7fc-aafe-4e12-8e70-b05a94f62a76">
+		<outlook365:oauth-client-credentials-connection>
+			<outlook365:oauth-client-credentials
+				clientId="9b749c5c-94eb-47bd-a0b3-c046abbd3da6"
+				clientSecret="kAN8Q~qpcwPAzvIT0.0y5F4NE4rbrdpVz-QVEaux"
+				tokenUrl="https://login.microsoftonline.com/ef8a53ea-1a1c-4189-b792-c832dcaea568/oauth2/v2.0/token"
+				scopes="https://graph.microsoft.com/.default" />
 		</outlook365:oauth-client-credentials-connection>
 	</outlook365:outlook365-config>
-	
-	<file:config name="File_Config" doc:name="File Config" doc:id="4667aa92-f8d5-4040-97ca-232ea6a01fda" >
-		<file:connection workingDir="C:\Users\jjlic\OneDrive\Área de Trabalho\novo" />
+
+	<file:config name="File_Config" doc:name="File Config"
+		doc:id="4667aa92-f8d5-4040-97ca-232ea6a01fda">
+		<file:connection
+			workingDir="C:\Users\jjlic\OneDrive\Área de Trabalho\novo" />
 	</file:config>
-	<smb:config name="SMB_Connector_Config" doc:name="SMB Connector Config" doc:id="e58c9453-8991-4752-ba40-6b4606143d99" >
-		<smb:connection domain="ad.yara.com" host="10.151.2.33" share="\NFE_IN_ECC\NFe" username="mulesoftamer" password="BSAPgo@3533" connectionTimeout="100" fileAgeUnit="MINUTES" socketTimeout="100"/>
+	<smb:config name="SMB_Connector_Config"
+		doc:name="SMB Connector Config"
+		doc:id="e58c9453-8991-4752-ba40-6b4606143d99">
+		<smb:connection domain="ad.yara.com" host="10.151.2.33"
+			share="NFe" username="CR000385"
+			password="YHhfgvBv87S9HErf!" connectionTimeout="100" fileAgeUnit="MINUTES"
+			socketTimeout="100" />
 	</smb:config>
-	<flow name="mailFlow" doc:id="eb011a5a-0615-46ad-849f-5edbacebfd72" >
-		<http:listener doc:name="Listener" doc:id="ff1ed4b9-5f6f-407c-a4ea-fc1b23b5564e" config-ref="HTTP_Listener_config" path="/api"/>
-		<outlook365:list-messages doc:name="List messages" doc:id="c9156c1f-2a6e-4dd5-bd16-3d48a56bc566" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" outlookBodyContentType="TEXT" outputEncoding="UTF-8" readTimeout="60" readTimeoutTimeUnit="SECONDS" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA="/>
-				<ee:transform doc:name="Transform Message" doc:id="3f0f371e-d611-4af8-a0a3-e7c30919238b">
+	<flow name="mailFlow"
+		doc:id="eb011a5a-0615-46ad-849f-5edbacebfd72">
+		<http:listener doc:name="Listener" doc:id="ff1ed4b9-5f6f-407c-a4ea-fc1b23b5564e" config-ref="HTTP_Listener_config" path="/api" />
+		<outlook365:list-messages
+			doc:name="List messages"
+			doc:id="c9156c1f-2a6e-4dd5-bd16-3d48a56bc566"
+			config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com"
+			outlookBodyContentType="TEXT" outputEncoding="UTF-8" readTimeout="60"
+			readTimeoutTimeUnit="SECONDS"
+			mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="3f0f371e-d611-4af8-a0a3-e7c30919238b">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -41,25 +80,28 @@ output application/json
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<choice doc:name="Choice" doc:id="49c3f22d-093a-4be7-aea1-3c495d12e445" >
+		<choice doc:name="Choice"
+			doc:id="49c3f22d-093a-4be7-aea1-3c495d12e445">
 			<when expression='#[payload[0].payload.hasAttachments== true]'>
-				<ee:transform doc:name="Transform Message" doc:id="3787b86c-6e59-4500-9813-f4e562533565">
-			<ee:message>
-			</ee:message>
-			<ee:variables>
-				<ee:set-variable variableName="mensagem"><![CDATA[%dw 2.0
+				<ee:transform doc:name="Transform Message"
+					doc:id="3787b86c-6e59-4500-9813-f4e562533565">
+					<ee:message>
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="mensagem"><![CDATA[%dw 2.0
 output application/json
 ---
 
 	id: payload[0].payload.id
 ]]></ee:set-variable>
-			</ee:variables>
-		</ee:transform>
+					</ee:variables>
+				</ee:transform>
 			</when>
-			<otherwise >
-				<ee:transform doc:name="Transform Message" doc:id="643c381c-2dfb-4c39-b0f1-1a10d75b435e" >
-					<ee:message >
-						<ee:set-payload ><![CDATA[%dw 2.0
+			<otherwise>
+				<ee:transform doc:name="Transform Message"
+					doc:id="643c381c-2dfb-4c39-b0f1-1a10d75b435e">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 
@@ -69,12 +111,21 @@ output application/json
 				</ee:transform>
 			</otherwise>
 		</choice>
-		<logger level="INFO" doc:name="Logger" doc:id="3af0ad06-c540-4cff-b352-3cb56186b76b" message="#[payload]"/>
-		<flow-ref doc:name="Flow Reference" doc:id="7960436b-3c93-4705-bf57-8439ad2e8600" name="mailFlow1"/>
-</flow>
-	<flow name="mailFlow1" doc:id="3d5adedd-982c-4e9c-9027-b932e6690249" >
-		<outlook365:list-message-attachments doc:name="List message attachments" doc:id="6d2cb50a-eae4-4f5a-837a-d63cd443f2c3" config-ref="Outlook365_Outlook365_Config" messageId='#[vars.mensagem.id]' userId="nfeteste@yara.com"/>
-		<ee:transform doc:name="Transform Message" doc:id="6655fd68-eca5-4756-9aa5-7eacb88a351f">
+		<logger level="INFO" doc:name="Logger"
+			doc:id="3af0ad06-c540-4cff-b352-3cb56186b76b" message="#[payload]" />
+		<flow-ref doc:name="Flow Reference"
+			doc:id="7960436b-3c93-4705-bf57-8439ad2e8600" name="mailFlow1" />
+	</flow>
+	<flow name="mailFlow1"
+		doc:id="3d5adedd-982c-4e9c-9027-b932e6690249">
+		<http:listener doc:name="Listener" doc:id="0187d6ad-0ce1-4dbb-9490-13364cf686fa" config-ref="HTTP_Listener_config" path="/teste"/>
+		<outlook365:list-message-attachments
+			doc:name="List message attachments"
+			doc:id="6d2cb50a-eae4-4f5a-837a-d63cd443f2c3"
+			config-ref="Outlook365_Outlook365_Config"
+			messageId='AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQBGAAAAAACOEp_wpe90R4mQZRlqa9m7BwAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAAL4KSG2ik4SKqrLwoIvnkkAAUcZn1zAAA=' userId="nfeteste@yara.com" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="6655fd68-eca5-4756-9aa5-7eacb88a351f">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -82,46 +133,69 @@ output application/json
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<choice doc:name="Choice" doc:id="caf5763e-b52b-4c0b-a59e-ad07ca0a7fd2">
-			<when expression='#[payload[0].payload.contentType=="text/xml"]'>
-				<ee:transform doc:name="Transform Message" doc:id="066d4f9d-c7bc-44b3-a239-6282b7eb60e6">
+		<ee:transform doc:name="Transform Message"
+			doc:id="b6486c4d-9773-4ca5-9829-618c4f02e0f1">
 			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload filter ($.payload.contentType == "text/xml" or $.payload.contentType == "application/xml")]]></ee:set-payload>
 			</ee:message>
-			<ee:variables>
-				<ee:set-variable variableName="anexo"><![CDATA[%dw 2.0
+		</ee:transform>
+		<foreach doc:name="For Each"
+			doc:id="4aed8e71-cf83-4bb9-b9ee-6fc222998138" collection='#[payload]'>
+			<ee:transform doc:name="Transform Message"
+				doc:id="066d4f9d-c7bc-44b3-a239-6282b7eb60e6">
+				<ee:message>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="anexo"><![CDATA[%dw 2.0
 output application/json
 ---
 {
-id: payload[0].payload.id,
-nome: payload[0].payload.name
+	id: payload.payload.id,
+	nome: payload.payload.name
 }]]></ee:set-variable>
-			</ee:variables>
-		</ee:transform>
-			</when>
-			<otherwise>
-				<ee:transform doc:name="Transform Message" doc:id="969a919e-3be3-40df-bc89-1fe3bdb5f75f">
-					<ee:message>
-						<ee:set-payload><![CDATA[%dw 2.0
+				</ee:variables>
+			</ee:transform>
+			<outlook365:get-message-attachment
+				doc:name="Get message attachment"
+				doc:id="a816944c-7f3c-4fd9-8b49-6b2ddbccdf32"
+				config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com"
+				messageId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQBGAAAAAACOEp_wpe90R4mQZRlqa9m7BwAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAAL4KSG2ik4SKqrLwoIvnkkAAUcZn1zAAA=" getRawContent="true"
+				attachmentId="#[vars.anexo.id]" />
+			<ee:transform doc:name="Transform Message" doc:id="8f530292-db84-4ef1-93bf-9380764e82bb" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[payload]]></ee:set-payload>
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="modelo" ><![CDATA[%dw 2.0
 output application/json
-
+var result = read(payload, "application/xml")
 ---
-"não"]]></ee:set-payload>
-					</ee:message>
-				</ee:transform>
-			</otherwise>
-		</choice>
-		<outlook365:get-message-attachment doc:name="Get message attachment" doc:id="a816944c-7f3c-4fd9-8b49-6b2ddbccdf32" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" messageId="#[vars.mensagem.id]" getRawContent="true" attachmentId="#[vars.anexo.id]"/>
-		<smb:file-write doc:name="File Write" doc:id="cea14a13-dc04-4aa0-aed4-eb46dfecfb1a" config-ref="SMB_Connector_Config" fileName="#[vars.anexo.nome]"/>
-		<file:write doc:name="Write" doc:id="fdfb5f35-7018-47d2-a1be-451226336f53" config-ref="File_Config" path="#[vars.anexo.nome]" />
-		<outlook365:move-message doc:name="Move message" doc:id="ae6af140-7b36-4b89-842a-e22d2d613a4d" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" messageId="#[vars.mensagem.id]" destinationId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAElAAA=" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA="/>
-		<logger level="INFO" doc:name="Logger" doc:id="8ce5cd99-d92a-4835-b654-0343154fa127" />
+(result pluck $$)[0]]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<ee:transform doc:name="Transform Message" doc:id="f4cc655c-5ee1-43b7-8a0e-40be042c0991" >
+				<ee:message >
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="diretorio" ><![CDATA[%dw 2.0
+output application/json
+---
+if (vars.modelo == "nfeProc") p('diretorios.nfe') else if (vars.modelo == "cteProc" or vars.modelo == "cteOSProc") p('diretorios.cte') 
+else if (vars.modelo == "procEventoNFe") p('diretorios.eventoNfe') else if (vars.modelo == "procEventoCTe") p('diretorios.eventoCte')
+else ""]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<smb:file-write doc:name="File Write" doc:id="cea14a13-dc04-4aa0-aed4-eb46dfecfb1a" config-ref="SMB_Connector_Config" fileName="#[vars.anexo.nome]" dirName="#[vars.diretorio]"/>
+			<outlook365:move-message doc:name="Move message" doc:id="ae6af140-7b36-4b89-842a-e22d2d613a4d" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" messageId="#[vars.mensagem.id]" destinationId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAElAAA=" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" />
+			<file:write doc:name="Write"
+				doc:id="fdfb5f35-7018-47d2-a1be-451226336f53"
+				config-ref="File_Config" path="#[vars.anexo.nome]" />
+		</foreach>
+		<logger level="INFO" doc:name="Logger"
+			doc:id="8ce5cd99-d92a-4835-b654-0343154fa127" />
 	</flow>
-	<flow name="mailFlow2" doc:id="99d3ee68-c867-4553-aacd-3e282600e8b4" >
-		<http:listener doc:name="Listener" doc:id="1d14a220-6370-4d92-8136-2bdc2924175b" config-ref="HTTP_Listener_config" path="/teste"/>
-<!-- [STUDIO:"Copy_of_List messages"]		<outlook365:list-messages userId="nfeteste@yara.com" doc:name="Copy_of_List messages" doc:id="32b96dd7-55c6-419b-8184-33c9cd0af3cd" config-ref="Outlook365_Outlook365_Config" outlookBodyContentType="TEXT" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" outputEncoding="UTF-8" readTimeout="60" readTimeoutTimeUnit="SECONDS" /> [STUDIO] -->
-		<outlook365:list-message-attachments doc:name="List message attachments" doc:id="a7293fb3-25a4-4230-bccf-6f8019987284" config-ref="Outlook365_Outlook365_Config" messageId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQBGAAAAAACOEp_wpe90R4mQZRlqa9m7BwAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAAL4KSG2ik4SKqrLwoIvnkkAAS9ekZcAAA=" userId="nfeteste@yara.com">
-		</outlook365:list-message-attachments>
-		<logger level="INFO" doc:name="Logger" doc:id="0fd9d840-7d99-459d-ad3c-1ea0895985ab" />
-	</flow>
-
+	
 </mule>
