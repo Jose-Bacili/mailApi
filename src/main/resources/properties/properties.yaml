@@ -3,7 +3,14 @@
 # HTTPS Properties
 
 diretorios:
-  nfe: "YARPOQAS01/NFE_IN_ECC/NFe"
-  cte: "YARPOQAS01/NFE_IN_ECC/CTe"
-  eventoNfe: "YARPOQAS01/NFE_IN_ECC/Event"
-  eventoCte: "YARPOQAS01/NFE_IN_ECC/EventCTe"
+  nfe: "NFe"
+  cte: "CTe"
+  eventoNfe: "Event"
+  eventoCte: "EventCTe"
+  
+smb:
+  domain: "ad.yara.com"
+  host: "10.151.2.33"
+  share: "NFE_IN_ECC"
+  user: "CR000385"
+  pwd: "YHhfgvBv87S9HErf!"

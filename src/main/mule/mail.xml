@@ -56,69 +56,62 @@ http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/
 	<smb:config name="SMB_Connector_Config"
 		doc:name="SMB Connector Config"
 		doc:id="e58c9453-8991-4752-ba40-6b4606143d99">
-		<smb:connection domain="ad.yara.com" host="10.151.2.33"
-			share="NFe" username="CR000385"
-			password="YHhfgvBv87S9HErf!" connectionTimeout="100" fileAgeUnit="MINUTES"
-			socketTimeout="100" />
+		<smb:connection username="${smb.user}"
+			password="${smb.pwd}" connectionTimeout="100"
+			fileAgeUnit="MINUTES" socketTimeout="100" host="${smb.host}" domain="${smb.domain}" share="${smb.share}"/>
 	</smb:config>
 	<flow name="mailFlow"
 		doc:id="eb011a5a-0615-46ad-849f-5edbacebfd72">
-		<http:listener doc:name="Listener" doc:id="ff1ed4b9-5f6f-407c-a4ea-fc1b23b5564e" config-ref="HTTP_Listener_config" path="/api" />
+		<http:listener doc:name="Listener"
+			doc:id="ff1ed4b9-5f6f-407c-a4ea-fc1b23b5564e"
+			config-ref="HTTP_Listener_config" path="/api" />
 		<outlook365:list-messages
 			doc:name="List messages"
 			doc:id="c9156c1f-2a6e-4dd5-bd16-3d48a56bc566"
 			config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com"
 			outlookBodyContentType="TEXT" outputEncoding="UTF-8" readTimeout="60"
 			readTimeoutTimeUnit="SECONDS"
-			mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" />
-		<ee:transform doc:name="Transform Message"
-			doc:id="3f0f371e-d611-4af8-a0a3-e7c30919238b">
-			<ee:message>
-				<ee:set-payload><![CDATA[%dw 2.0
+			mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA="/>
+		<ee:transform doc:name="Transform Message" doc:id="98ae0170-5300-4598-a58e-bcbd316d4007" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<choice doc:name="Choice"
-			doc:id="49c3f22d-093a-4be7-aea1-3c495d12e445">
-			<when expression='#[payload[0].payload.hasAttachments== true]'>
-				<ee:transform doc:name="Transform Message"
-					doc:id="3787b86c-6e59-4500-9813-f4e562533565">
-					<ee:message>
-					</ee:message>
-					<ee:variables>
-						<ee:set-variable variableName="mensagem"><![CDATA[%dw 2.0
+		<ee:transform doc:name="Transform Message"
+			doc:id="814129e4-7ad3-409c-8b0c-4989f331547c">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload filter ($.payload.hasAttachments == true)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<foreach doc:name="For Each"
+			doc:id="dacf444c-677f-444a-b4dc-efcc3c7011e3" collection="#[payload]">
+			<ee:transform doc:name="Transform Message"
+				doc:id="3787b86c-6e59-4500-9813-f4e562533565">
+				<ee:message>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="mensagem"><![CDATA[%dw 2.0
 output application/json
 ---
 
-	id: payload[0].payload.id
+	id: payload.payload.id
 ]]></ee:set-variable>
-					</ee:variables>
-				</ee:transform>
-			</when>
-			<otherwise>
-				<ee:transform doc:name="Transform Message"
-					doc:id="643c381c-2dfb-4c39-b0f1-1a10d75b435e">
-					<ee:message>
-						<ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-
-	'não deu'
-]]></ee:set-payload>
-					</ee:message>
-				</ee:transform>
-			</otherwise>
-		</choice>
+				</ee:variables>
+			</ee:transform>
+			<flow-ref doc:name="Flow Reference"
+				doc:id="7960436b-3c93-4705-bf57-8439ad2e8600" name="mailFlow1"/>
+		</foreach>
 		<logger level="INFO" doc:name="Logger"
 			doc:id="3af0ad06-c540-4cff-b352-3cb56186b76b" message="#[payload]" />
-		<flow-ref doc:name="Flow Reference"
-			doc:id="7960436b-3c93-4705-bf57-8439ad2e8600" name="mailFlow1" />
 	</flow>
 	<flow name="mailFlow1"
 		doc:id="3d5adedd-982c-4e9c-9027-b932e6690249">
-		<http:listener doc:name="Listener" doc:id="0187d6ad-0ce1-4dbb-9490-13364cf686fa" config-ref="HTTP_Listener_config" path="/teste"/>
 		<outlook365:list-message-attachments
 			doc:name="List message attachments"
 			doc:id="6d2cb50a-eae4-4f5a-837a-d63cd443f2c3"
@@ -164,23 +157,25 @@ output application/json
 				config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com"
 				messageId="#[vars.mensagem.id]" getRawContent="true"
 				attachmentId="#[vars.anexo.id]" />
-			<ee:transform doc:name="Transform Message" doc:id="8f530292-db84-4ef1-93bf-9380764e82bb" >
-				<ee:message >
-					<ee:set-payload ><![CDATA[payload]]></ee:set-payload>
+			<ee:transform doc:name="Transform Message"
+				doc:id="8f530292-db84-4ef1-93bf-9380764e82bb">
+				<ee:message>
+					<ee:set-payload><![CDATA[payload]]></ee:set-payload>
 				</ee:message>
-				<ee:variables >
-					<ee:set-variable variableName="modelo" ><![CDATA[%dw 2.0
+				<ee:variables>
+					<ee:set-variable variableName="modelo"><![CDATA[%dw 2.0
 output application/json
 var result = read(payload, "application/xml")
 ---
 (result pluck $$)[0]]]></ee:set-variable>
 				</ee:variables>
 			</ee:transform>
-			<ee:transform doc:name="Transform Message" doc:id="f4cc655c-5ee1-43b7-8a0e-40be042c0991" >
-				<ee:message >
+			<ee:transform doc:name="Transform Message"
+				doc:id="f4cc655c-5ee1-43b7-8a0e-40be042c0991">
+				<ee:message>
 				</ee:message>
-				<ee:variables >
-					<ee:set-variable variableName="diretorio" ><![CDATA[%dw 2.0
+				<ee:variables>
+					<ee:set-variable variableName="diretorio"><![CDATA[%dw 2.0
 output application/json
 ---
 if (vars.modelo == "nfeProc") p('diretorios.nfe') else if (vars.modelo == "cteProc" or vars.modelo == "cteOSProc") p('diretorios.cte') 
@@ -188,14 +183,11 @@ else if (vars.modelo == "procEventoNFe") p('diretorios.eventoNfe') else if (vars
 else ""]]></ee:set-variable>
 				</ee:variables>
 			</ee:transform>
-			<smb:file-write doc:name="File Write" doc:id="cea14a13-dc04-4aa0-aed4-eb46dfecfb1a" config-ref="SMB_Connector_Config" fileName="#[vars.anexo.nome]" dirName="#[vars.diretorio]"/>
-			<outlook365:move-message doc:name="Move message" doc:id="ae6af140-7b36-4b89-842a-e22d2d613a4d" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" messageId="#[vars.mensagem.id]" destinationId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAElAAA=" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" />
-<!-- [STUDIO:"Write"]			<file:write doc:name="Write"
-				doc:id="fdfb5f35-7018-47d2-a1be-451226336f53"
-				config-ref="File_Config" path="#[vars.anexo.nome]" /> [STUDIO] -->
+
+	<smb:file-write doc:name="File Write" doc:id="cea14a13-dc04-4aa0-aed4-eb46dfecfb1a" config-ref="SMB_Connector_Config" fileName="#[vars.anexo.nome]" dirName="#[vars.diretorio]"/>
+<!-- 			<outlook365:move-message doc:name="Move message" doc:id="ae6af140-7b36-4b89-842a-e22d2d613a4d" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" messageId="#[vars.mensagem.id]" destinationId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAElAAA=" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" /> -->
+<!-- 	<file:write doc:name="Write" doc:id="d1cfe5b2-7227-4d75-b42a-1453d3ecbe0d" config-ref="File_Config" path="#[vars.anexo.nome]" /> -->
 		</foreach>
 		<logger level="INFO" doc:name="Logger"
 			doc:id="8ce5cd99-d92a-4835-b654-0343154fa127" />
-	</flow>
-	
-</mule>
+	</flow></mule>
