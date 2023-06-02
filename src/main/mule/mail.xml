@@ -176,7 +176,7 @@ var result = read(payload, "application/xml")
 output application/json
 ---
 if (vars.modelo == "nfeProc") p('diretorios.nfe') else if (vars.modelo == "cteProc" or vars.modelo == "cteOSProc") p('diretorios.cte') 
-else if (vars.modelo == "procEventoNFe") p('diretorios.eventoNfe') else if (vars.modelo == "procEventoCTe") p('diretorios.eventoCte')
+else if (vars.modelo == "procEventoNFe" or vars.modelo == "resEvento") p('diretorios.eventoNfe') else if (vars.modelo == "procEventoCTe") p('diretorios.eventoCte')
 else ""]]></ee:set-variable>
 				</ee:variables>
 			</ee:transform>
