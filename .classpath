@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="MULE_LIB/054d8287-ebe3-4da0-88cc-1b9c6bdbfc96/json-logger/2.0.2"/>
+	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-jms-connector/1.6.3"/>
+	<classpathentry kind="con" path="MULE_LIB/com.mulesoft.connectors/mule-amqp-connector/1.6.0"/>
+	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-file-connector/1.5.1"/>
+	<classpathentry kind="con" path="MULE_LIB/com.mulesoft.connectors/mule4-outlook365-connector/1.2.0"/>
+	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-http-connector/1.7.3"/>
+	<classpathentry kind="con" path="MULE_LIB/org.mule.modules/mule-apikit-module/1.9.0"/>
 	<classpathentry kind="con" path="MULE_LIB/com.mulesoft.connectors/mule-smb-connector/3.0.1"/>
-	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-file-connector/1.4.1"/>
-	<classpathentry kind="con" path="MULE_LIB/org.mule.modules/mule-apikit-module/1.6.1"/>
-	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-http-connector/1.7.1"/>
-	<classpathentry kind="con" path="MULE_LIB/com.mulesoft.connectors/mule4-outlook365-connector/1.1.4"/>
 	<classpathentry exported="true" kind="con" path="MULE_RUNTIME/org.mule.tooling.server.4.4.0.ee"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src/main/mule"/>

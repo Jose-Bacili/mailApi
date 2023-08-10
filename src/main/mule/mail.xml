@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
 	xmlns:smb="http://www.mulesoft.org/schema/mule/smb"
 	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
 	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
@@ -11,8 +12,7 @@
 	xmlns:outlook365="http://www.mulesoft.org/schema/mule/outlook365"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/outlook365 http://www.mulesoft.org/schema/mule/outlook365/current/mule-outlook365.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule/cloudhub/current/mule-cloudhub.xsd
@@ -21,7 +21,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
 http://www.mulesoft.org/schema/mule/smb http://www.mulesoft.org/schema/mule/smb/current/mule-smb.xsd
-http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd">
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
 	<http:listener-config name="HTTP_Listener_config"
 		doc:name="HTTP Listener config"
 		doc:id="5f33340f-e944-43c7-890c-099783f61424">
@@ -60,16 +61,18 @@ http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/
 			password="${smb.pwd}" connectionTimeout="100"
 			fileAgeUnit="MINUTES" socketTimeout="100" host="${smb.host}" domain="${smb.domain}" share="${smb.share}"/>
 	</smb:config>
+	<json-logger:config name="JSON_Logger_Config" doc:name="JSON Logger Config" doc:id="78c50712-9132-4958-8a35-e753857c060d" environment="prod" applicationName="mailNfe" applicationVersion="v1"/>
 	<flow name="mailFlow"
 		doc:id="eb011a5a-0615-46ad-849f-5edbacebfd72">
-		<http:listener doc:name="Listener" doc:id="00b88f36-d655-4627-98fc-beb858223f7a" config-ref="HTTP_Listener_config" path="/api"/>
+		
+		<http:listener doc:name="Listener" doc:id="ff4aca59-cce6-4bc0-bf8b-65bafd8321da" config-ref="HTTP_Listener_config" path="/api"/>
+		<json-logger:logger doc:name="Logger" doc:id="6c2e2ec1-dadd-4aa2-88fe-a3e699da0392" config-ref="JSON_Logger_Config" message="Mail Flow Start"/>
 		<outlook365:list-messages
 			doc:name="List messages"
 			doc:id="c9156c1f-2a6e-4dd5-bd16-3d48a56bc566"
-			config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com"
+			config-ref="Outlook365_Outlook365_Config" userId="nfe@yara.com"
 			outlookBodyContentType="TEXT" outputEncoding="UTF-8" readTimeout="60"
-			readTimeoutTimeUnit="SECONDS"
-			mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA="/>
+			readTimeoutTimeUnit="SECONDS" mailFolderId="AAMkADFkNDQzOWE0LTMyNGUtNDJmOC1hZjcxLWE4OTVlYWIyYzY1MwAuAAAAAACsR_86anyTRJHGSHD73NNMAQCab8_g7oMKQ7O2G1s0DSjcAAAAJGKAAAA="/>
 		<ee:transform doc:name="Payload to JSON" doc:id="98ae0170-5300-4598-a58e-bcbd316d4007" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -77,7 +80,14 @@ output application/json
 ---
 payload]]></ee:set-payload>
 			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="trace" ><![CDATA[%dw 2.0
+output application/json
+---
+if (payload != null) "Payload Ok" else "Payload Nulo"]]></ee:set-variable>
+			</ee:variables>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="8c35bbbf-a168-4503-9aad-3071f26880bf" message="#[vars.trace]"/>
 		<ee:transform doc:name="Payload Filter"
 			doc:id="814129e4-7ad3-409c-8b0c-4989f331547c">
 			<ee:message>
@@ -113,7 +123,7 @@ output application/json
 			doc:name="List message attachments"
 			doc:id="6d2cb50a-eae4-4f5a-837a-d63cd443f2c3"
 			config-ref="Outlook365_Outlook365_Config"
-			messageId='#[vars.mensagem.id]' userId="nfeteste@yara.com" />
+			messageId='#[vars.mensagem.id]' userId="nfe@yara.com" mailFolderId="AAMkADFkNDQzOWE0LTMyNGUtNDJmOC1hZjcxLWE4OTVlYWIyYzY1MwAuAAAAAACsR_86anyTRJHGSHD73NNMAQCab8_g7oMKQ7O2G1s0DSjcAAAAJGKAAAA="/>
 		<ee:transform doc:name="Payload to Json"
 			doc:id="6655fd68-eca5-4756-9aa5-7eacb88a351f">
 			<ee:message>
@@ -134,6 +144,13 @@ payload filter ($.payload.contentType == "text/xml" or $.payload.contentType == 
 		</ee:transform>
 		<foreach doc:name="For Each"
 			doc:id="4aed8e71-cf83-4bb9-b9ee-6fc222998138" collection='#[payload]'>
+			<json-logger:logger doc:name="Logger" doc:id="44724910-fff4-418e-80b4-36af495c551f" config-ref="JSON_Logger_Config" message="Arquivo a ser processado">
+				<json-logger:content><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+	id: payload.payload.id,
+	nome: payload.payload.name replace /[\/\\:]/ with ""
+}]]]></json-logger:content>
+			</json-logger:logger>
 			<ee:transform doc:name="Attachment Variables"
 				doc:id="066d4f9d-c7bc-44b3-a239-6282b7eb60e6">
 				<ee:message>
@@ -144,14 +161,14 @@ output application/json
 ---
 {
 	id: payload.payload.id,
-	nome: payload.payload.name
+	nome: payload.payload.name replace /[\/\\:]/ with ""
 }]]></ee:set-variable>
 				</ee:variables>
 			</ee:transform>
 			<outlook365:get-message-attachment
 				doc:name="Get message attachment"
 				doc:id="a816944c-7f3c-4fd9-8b49-6b2ddbccdf32"
-				config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com"
+				config-ref="Outlook365_Outlook365_Config" userId="nfe@yara.com"
 				messageId="#[vars.mensagem.id]" getRawContent="true"
 				attachmentId="#[vars.anexo.id]" />
 			<ee:transform doc:name="Payload to Json and modelo variable"
@@ -176,15 +193,28 @@ var result = read(payload, "application/xml")
 output application/json
 ---
 if (vars.modelo == "nfeProc") p('diretorios.nfe') else if (vars.modelo == "cteProc" or vars.modelo == "cteOSProc") p('diretorios.cte') 
-else if (vars.modelo == "procEventoNFe" or vars.modelo == "resEvento") p('diretorios.eventoNfe') else if (vars.modelo == "procEventoCTe") p('diretorios.eventoCte')
+else if (vars.modelo == "procEventoNFe") p('diretorios.eventoNfe') else if (vars.modelo == "resEvento") p('diretorios.eventoNfe') else if (vars.modelo == "procEventoCTe") p('diretorios.eventoCte')
+else if (vars.modelo == "mdfeProc") p('diretorios.cte')
 else ""]]></ee:set-variable>
 				</ee:variables>
 			</ee:transform>
 
 		<smb:file-write doc:name="File Write" doc:id="cea14a13-dc04-4aa0-aed4-eb46dfecfb1a" config-ref="SMB_Connector_Config" fileName="#[vars.anexo.nome]" dirName="#[vars.diretorio]" />
-<!--  	<file:write doc:name="Write" doc:id="d1cfe5b2-7227-4d75-b42a-1453d3ecbe0d" config-ref="File_Config" path="#[vars.anexo.nome]" /> -->
+<!-- 		<file:write doc:name="Write" doc:id="d1cfe5b2-7227-4d75-b42a-1453d3ecbe0d" config-ref="File_Config" path="#[vars.anexo.nome]" /> -->
+			<json-logger:logger doc:name="Logger" doc:id="e00bf566-9765-4f31-a113-26288cb43441" config-ref="JSON_Logger_Config" message="Mensagem Processada">
+				<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+	id: vars.anexo.id,
+	nome: vars.anexo.nome
+}]]]></json-logger:content>
+			</json-logger:logger>
 		</foreach>
-		<outlook365:move-message doc:name="Move message" doc:id="208a57f3-4848-4a20-b203-f677f7b3f80e" config-ref="Outlook365_Outlook365_Config" userId="nfeteste@yara.com" messageId="#[vars.mensagem.id]" destinationId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAElAAA=" mailFolderId="AAMkADdiZjRhYTk4LTM5YWEtNGMxYy05NTkyLWY4NzlmODI4YzZmYQAuAAAAAACOEp_wpe90R4mQZRlqa9m7AQAL4KSG2ik4SKqrLwoIvnkkAAAAAAEMAAA=" />
-		<logger level="INFO" doc:name="Logger"
-			doc:id="8ce5cd99-d92a-4835-b654-0343154fa127" />
+		<outlook365:delete-message doc:name="Delete message" doc:id="85ebcb04-28e5-4253-b02c-e5533ed5ea04" config-ref="Outlook365_Outlook365_Config" userId="nfe@yara.com" messageId="#[vars.mensagem.id]" mailFolderId="AAMkADFkNDQzOWE0LTMyNGUtNDJmOC1hZjcxLWE4OTVlYWIyYzY1MwAuAAAAAACsR_86anyTRJHGSHD73NNMAQCab8_g7oMKQ7O2G1s0DSjcAAAAJGKAAAA="/>
+		<json-logger:logger doc:name="Logger" doc:id="f171b571-1270-4801-84f4-97981c8b57b9" config-ref="JSON_Logger_Config" message="Mensagem Apagada">
+			<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+	id: vars.anexo.id,
+	nome: vars.anexo.nome
+}]]]></json-logger:content>
+		</json-logger:logger>
 	</flow></mule>

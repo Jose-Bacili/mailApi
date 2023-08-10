@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_eb011a5a_0615_46ad_849f_5edbacebfd72_Output_Variables_trace = "Payload Ok" | "Payload Nulo"
+
