@@ -17,3 +17,12 @@ smb:
   
 cron:
   expression: "0 0/10 * 1/1 * ? *"
+  
+  
+outlook:
+  client_id: "9b749c5c-94eb-47bd-a0b3-c046abbd3da6"
+  client_secret: "kAN8Q~qpcwPAzvIT0.0y5F4NE4rbrdpVz-QVEaux"
+  tokenUrl: "https://login.microsoftonline.com/ef8a53ea-1a1c-4189-b792-c832dcaea568/oauth2/v2.0/token"
+  scopes: "https://graph.microsoft.com/.default"
+  user: "nfetesteqas@yara.com"
+  folderId: "AQMkADZlMGJmZTIzLTI4MWMtNGJiADUtODE0NS1hN2E3Y2U1Y2I3NTcALgAAAyEAr8ZuFppFrigEZEhtYJ0BAOqSgnltSeFNrLsLKPXameMAAAIBDAAAAA=="

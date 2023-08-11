@@ -8,5 +8,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
 http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
 	<configuration-properties doc:name="Configuration properties" doc:id="ef2a1a4d-3a0c-4a7a-a62d-f656af6cb90c" file="properties\properties.yaml" />
+	<global-property doc:name="Global Property" doc:id="113eb9ef-5d44-452b-bd11-fb3929846d3b" name="mule.env" value="prod" />
+	<configuration-properties doc:name="Configuration properties" doc:id="f378f7cd-5c2a-44f4-87c7-ee3494ce9822" file="properties\properties-${mule.env}.yaml" />
 	
 </mule>
