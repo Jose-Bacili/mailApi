@@ -7,7 +7,7 @@
 	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
-	<name>nfe-mail-sapi1-1.0.0-mule-application</name>
+	<name>nfe-mail-int</name>
 
 	<description/>
 	<properties>

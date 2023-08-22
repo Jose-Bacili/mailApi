@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
-  <types:catalog/>
+  <types:catalog>
+    <types:type name="type" format="xml">
+      <types:example format="xml" element="{http://www.portalfiscal.inf.br/nfe}nfeProc" location="examples/31230817498890000106550010003140671008680280.xml"/>
+    </types:type>
+  </types:catalog>
   <types:enrichment select="#8f530292-db84-4ef1-93bf-9380764e82bb"/>
-  <types:enrichment select="#814129e4-7ad3-409c-8b0c-4989f331547c"/>
+  <types:enrichment select="#77d1be5a-4d78-4e6e-98f1-bb0be6ba0712"/>
 </types:mule>
